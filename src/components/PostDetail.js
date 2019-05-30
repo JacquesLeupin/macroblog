@@ -13,7 +13,9 @@ class PostDetail extends Component {
   }
 
   toggleEdit() {
-    this.setState({ isEditing: !this.state.isEditing })
+    this.setState(st => ({
+      isEditing: !st.isEditing
+    }));
   }
 
   deleteClick() {
@@ -24,16 +26,16 @@ class PostDetail extends Component {
   renderDetail() {
     const { id, title, description, body, comments } = this.props.post;
     const commentList = comments ? (
-      <ul className="mb-3">
+      <div className="mb-3">
         {comments.map(comment => (
-          <li>
-            <button onClick={() => this.props.deleteComment(id, comment.id)}>
-              X
-            </button>
+          <div key={comment.id}>
+            <span onClick={() => this.props.deleteComment(id, comment.id)}>
+            <i className="fas fa-times mr-3" style={{color: "red"}}></i>
+            </span>
             {comment.text}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     ) : (
       <div className="mb-3">No comments yet...</div>
     )
@@ -66,7 +68,7 @@ class PostDetail extends Component {
   }
 
   render() {
-    return this.state.isEditing ? this.renderForm() : this.renderDetail()
+    return this.state.isEditing ? this.renderForm() : this.renderDetail();
   }  
 }
 

@@ -52,42 +52,49 @@ class PostForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={formStyles}>
-        <div className="form-group">
-          <input
-            className="form-control"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-            placeholder="Please enter a title"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            className="form-control"
-            name="description"
-            value={this.state.description}
-            onChange={this.handleChange}
-            placeholder="Please enter a description"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            className="form-control"
-            name="body"
-            value={this.state.body}
-            onChange={this.handleChange}
-            placeholder="Please enter a body"
-            rows="10"
-            required
-          />
-        </div>
-        <button onClick={this.handleSubmit} className="btn btn-primary">
-          {this.props.isEditing ? "Edit" : "Add"}
-        </button>
-      </form>
+      <div style={formStyles}>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <input
+              className="form-control"
+              name="title"
+              value={this.state.title}
+              onChange={this.handleChange}
+              placeholder="Please enter a title"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              className="form-control"
+              name="description"
+              value={this.state.description}
+              onChange={this.handleChange}
+              placeholder="Please enter a description"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <textarea
+              className="form-control"
+              name="body"
+              value={this.state.body}
+              onChange={this.handleChange}
+              placeholder="Please enter a body"
+              rows="10"
+              required
+            />
+          </div>
+          <button onClick={this.handleSubmit} className="btn btn-primary">
+            {this.props.isEditing ? "Edit" : "Add"}
+          </button>
+        </form>
+        {this.props.isEditing ? (
+          <button className="btn btn-secondary btn-sm mt-3" onClick={this.props.toggleEdit}>Back</button>
+        ) : (
+          <button className="btn btn-secondary btn-sm mt-3" onClick={() => this.props.history.go(-1)}>Back</button>
+        )}
+      </div>
     )
   }
 }
