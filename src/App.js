@@ -26,10 +26,12 @@ export default class App extends Component {
     this.addPost = this.addPost.bind(this)
     this.editPost = this.editPost.bind(this)
     this.deletePost = this.deletePost.bind(this)
+    this.addComment = this.addComment.bind(this)
+    this.deleteComment = this.deleteComment.bind(this)
   }
 
   addPost(post) {
-    let newPost = { ...post, id: uuid() }
+    let newPost = { ...post, id: uuid(), comments: [] }
     this.setState({ posts: [...this.state.posts, newPost] })
   }
 
@@ -51,6 +53,24 @@ export default class App extends Component {
     })
   }
 
+  addComment(text, id){
+    this.setState(st => {
+      let idx = st.posts.findIndex(post => post.id === id)
+      let postsCopy = [...st.posts]
+      postsCopy[idx].comments.push({text, id: uuid()})
+      return { ...this.state, posts: postsCopy }
+    })
+  }
+
+  deleteComment(postId, commentId) {
+    this.setState(st => {
+      let idx = st.posts.findIndex(post => post.id === postId)
+      let postsCopy = [...st.posts]
+      let commentIdx = postsCopy[idx].comments.findIndex(comment => comment.id === commentId)
+      postsCopy[idx].comments.splice(commentIdx, 1)
+      return { ...this.state, posts: postsCopy }
+    })
+  }
 
   render() {
 
@@ -62,6 +82,8 @@ export default class App extends Component {
           addPost={this.addPost}
           editPost={this.editPost}
           deletePost={this.deletePost}
+          addComment={this.addComment}
+          deleteComment={this.deleteComment}
         />
       </BrowserRouter>
     )

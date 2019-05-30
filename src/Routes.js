@@ -20,6 +20,8 @@ export default class Routes extends Component {
                 post={targetPost}
                 editPost={this.props.editPost}
                 deletePost={this.props.deletePost}
+                addComment={this.props.addComment}
+                deleteComment={this.props.deleteComment}
               />
             );
         }}/>

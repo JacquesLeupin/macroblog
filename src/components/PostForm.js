@@ -14,8 +14,8 @@ class PostForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount () {
-    if(this.props.isEditing){
+  componentDidMount() {
+    if (this.props.isEditing) {
       this.setState({
         title: this.props.title,
         description: this.props.description,
@@ -31,7 +31,7 @@ class PostForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
 
-    if (this.props.isEditing){
+    if (this.props.isEditing) {
       this.props.editPost(this.state, this.props.id)
       this.setState({
         title: '',
@@ -39,7 +39,7 @@ class PostForm extends Component {
         body: ''
       })
       this.props.toggleEdit()
-    }else{
+    } else {
       this.props.addPost(this.state)
       this.setState({
         title: '',

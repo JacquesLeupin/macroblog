@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PostForm from './PostForm';
+import CommentForm from './CommentForm';
 
 export default class PostDetail extends Component {
   constructor(props) {
@@ -12,17 +13,17 @@ export default class PostDetail extends Component {
     this.deleteClick = this.deleteClick.bind(this)
   }
 
-  toggleEdit () {
-    this.setState({isEditing: !this.state.isEditing})
+  toggleEdit() {
+    this.setState({ isEditing: !this.state.isEditing })
   }
 
-  deleteClick () {
+  deleteClick() {
     this.props.deletePost(this.props.post.id)
     this.props.history.push('/')
   }
 
   renderDetail() {
-    const { id, title, description, body } = this.props.post;
+    const { id, title, description, body, comments } = this.props.post;
     return (
       <div>
 
@@ -32,12 +33,21 @@ export default class PostDetail extends Component {
 
         <button onClick={this.toggleEdit}>Edit Post</button>
         <button onClick={this.deleteClick}>Delete Post</button>
+        <ul>
+          {comments.map(comment => (
+            <li>
+              <button onClick={() => this.props.deleteComment(id, comment.id)}>X</button>
+              {comment.text}
+            </li>
+          ))}
+        </ul>
+        <CommentForm addComment={this.props.addComment} id={id} />
       </div>
     )
   }
 
   renderForm() {
-    return <PostForm {...this.props.post} isEditing={true} editPost={this.props.editPost} toggleEdit={this.toggleEdit}/>
+    return <PostForm {...this.props.post} isEditing={true} editPost={this.props.editPost} toggleEdit={this.toggleEdit} />
   }
 
   render() {
