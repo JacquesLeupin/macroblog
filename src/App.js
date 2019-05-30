@@ -1,26 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { BrowserRouter } from "react-router-dom";
+import Navbar from './components/Navbar';
+import Routes from './Routes'
+import uuid from 'uuid/v4'
+export default class App extends Component {
+  constructor(props) {
+    super(props)
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    this.state = {
+      posts: [
+        {
+          id: 'aslkdfjasdlfj',
+          title: 'Post 1',
+          description: 'This is the first post',
+          body: 'First Post'
+        },
+        {
+          id: 'aslkdfjasdlfj',
+          title: 'Post 2',
+          description: 'This is the second post',
+          body: 'Second Post'
+        }
+      ]
+    }
+    this.addPost = this.addPost.bind(this)
+    this.editPost = this.editPost.bind(this)
+    this.deletePost = this.deletePost.bind(this)
+  }
+
+  addPost(post) {
+    let newPost = { ...post, id: uuid() }
+    this.setState({ posts: [...this.state.posts, newPost] })
+  }
+
+  editPost(post, id) {
+    this.setState(st => {
+      let idx = st.posts.findIndex(post => post.id === id)
+      let postsCopy = [...st.posts]
+      postsCopy[idx] = { ...post, id: id }
+      return { ...this.state, posts: postsCopy }
+    })
+  }
+
+  deletePost(id) {
+    this.setState(st => {
+      let idx = st.posts.findIndex(post => post.id === id)
+      let postsCopy = [...st.posts]
+      postsCopy.splice(idx, 1)
+      return { ...this.state, posts: postsCopy }
+    })
+  }
+
+
+  render() {
+
+    return (
+      <BrowserRouter>
+        <Navbar />
+        <Routes
+          posts={this.state.posts}
+          addPost={this.addPost}
+          editPost={this.editPost}
+          deletePost={this.deletePost}
+        />
+      </BrowserRouter>
+    )
+  }
 }
 
-export default App;
+
+
+
+
