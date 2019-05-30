@@ -12,29 +12,34 @@ class PostDetail extends Component {
     this.deleteClick = this.deleteClick.bind(this)
   }
 
-  toggleEdit() {
+  toggleEdit() {    
     this.setState(st => ({
       isEditing: !st.isEditing
     }));
   }
 
   deleteClick() {
-    this.props.deletePost(this.props.post.id)
+    this.props.deletePost(this.props.match.params.id)
     this.props.history.push('/')
   }
 
   renderDetail() {
-    const { id, title, description, body, comments } = this.props.post;
+    const { title, description, body, comments } = this.props.post;
+    const postId = this.props.match.params.id;
+    let commentsArr = []
+    for (let [commentId, text] of Object.entries(comments)) {
+      commentsArr.push(
+        <div key={commentId}>
+          <span onClick={() => this.props.deleteComment(postId, commentId)}>
+          <i className="fas fa-times mr-3" style={{color: "red"}}></i>
+          </span>
+          {text}
+        </div>
+      );
+    }
     const commentList = comments ? (
       <div className="mb-3">
-        {comments.map(comment => (
-          <div key={comment.id}>
-            <span onClick={() => this.props.deleteComment(id, comment.id)}>
-            <i className="fas fa-times mr-3" style={{color: "red"}}></i>
-            </span>
-            {comment.text}
-          </div>
-        ))}
+        {commentsArr}
       </div>
     ) : (
       <div className="mb-3">No comments yet...</div>
@@ -50,7 +55,7 @@ class PostDetail extends Component {
             <button className="btn btn-danger btn-sm ml-2" onClick={this.deleteClick}>Delete Post</button>
           </div>
         </div>
-        <CommentForm addComment={this.props.addComment} id={id} />
+        <CommentForm addComment={this.props.addComment} id={postId} />
         {commentList}
       </div>
     );
@@ -63,6 +68,7 @@ class PostDetail extends Component {
         isEditing={true}
         editPost={this.props.editPost}
         toggleEdit={this.toggleEdit}
+        postId={this.props.match.params.id}
       />
     );
   }

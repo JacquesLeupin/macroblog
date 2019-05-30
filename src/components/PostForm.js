@@ -30,13 +30,13 @@ class PostForm extends Component {
     evt.preventDefault();
     // if editing post
     if (this.props.isEditing) {
-      this.props.editPost(this.state, this.props.id)
+      this.props.editPost(this.state, this.props.postId)
       this.setState({
         title: '',
         description: '',
         body: ''
       })
-      this.props.toggleEdit()
+      this.props.toggleEdit();
     }
     // if adding new post
     else {
@@ -86,7 +86,7 @@ class PostForm extends Component {
             />
           </div>
           <button onClick={this.handleSubmit} className="btn btn-primary">
-            {this.props.isEditing ? "Edit" : "Add"}
+            {this.props.isEditing ? "Update" : "Add"}
           </button>
         </form>
         {this.props.isEditing ? (
