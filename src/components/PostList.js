@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export default class PostList extends Component {
-
-
+class PostList extends Component {
   render() {
     let posts = this.props.posts.map(post => (
-
-      <div key={post.id}>
-        <Link to={`/${post.id}`}>
-          <h3>{post.title}</h3>
-          <div>{post.description}</div>
-        </Link>
+      <div className="card mb-3">
+        <div className="card-body">
+          <h5 className="card-title"><Link to={`/${post.id}`}><h3>{post.title}</h3></Link></h5>
+          <p className="card-text">{post.description}</p>
+        </div>
       </div>
-
-    ))
-
+    ));
     return (
-      <div>
+      <div className="posts-list" style={listStyles}>
         {posts}
       </div>
     )
   }
+}
+
+export default PostList;
+
+const listStyles = {
+  maxWidth: "400px",
+  margin: "0 auto"
 }

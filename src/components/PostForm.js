@@ -3,15 +3,13 @@ import React, { Component } from 'react'
 class PostForm extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       title: '',
       description: '',
       body: ''
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -20,17 +18,17 @@ class PostForm extends Component {
         title: this.props.title,
         description: this.props.description,
         body: this.props.body
-      })
+      });
     }
   }
 
   handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
+    this.setState({ [evt.target.name]: evt.target.value });
   }
 
   handleSubmit(evt) {
-    evt.preventDefault()
-
+    evt.preventDefault();
+    // if editing post
     if (this.props.isEditing) {
       this.props.editPost(this.state, this.props.id)
       this.setState({
@@ -39,46 +37,64 @@ class PostForm extends Component {
         body: ''
       })
       this.props.toggleEdit()
-    } else {
+    }
+    // if adding new post
+    else {
       this.props.addPost(this.state)
       this.setState({
         title: '',
         description: '',
         body: ''
       })
-      this.props.history.push('/')
+      this.props.history.push('/');
     }
   }
 
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          name="title"
-          value={this.state.title}
-          onChange={this.handleChange}
-          placeholder="Please enter a title"
-          required />
-        <input
-          name="description"
-          value={this.state.description}
-          onChange={this.handleChange}
-          placeholder="Please enter a description"
-          required />
-        <textarea
-          name="body"
-          value={this.state.body}
-          onChange={this.handleChange}
-          placeholder="Please enter a body"
-          required />
-        <button onClick={this.handleSubmit}>Add</button>
-        <button onClick={this.handleSubmit}>Cancel</button>
+      <form onSubmit={this.handleSubmit} style={formStyles}>
+        <div className="form-group">
+          <input
+            className="form-control"
+            name="title"
+            value={this.state.title}
+            onChange={this.handleChange}
+            placeholder="Please enter a title"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="form-control"
+            name="description"
+            value={this.state.description}
+            onChange={this.handleChange}
+            placeholder="Please enter a description"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            className="form-control"
+            name="body"
+            value={this.state.body}
+            onChange={this.handleChange}
+            placeholder="Please enter a body"
+            rows="10"
+            required
+          />
+        </div>
+        <button onClick={this.handleSubmit} className="btn btn-primary">
+          {this.props.isEditing ? "Edit" : "Add"}
+        </button>
       </form>
     )
   }
 }
 
-
 export default PostForm
 
+const formStyles = {
+  width: "400px",
+  margin: "0 auto"
+}

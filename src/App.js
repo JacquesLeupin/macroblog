@@ -3,23 +3,23 @@ import { BrowserRouter } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Routes from './Routes'
 import uuid from 'uuid/v4'
-export default class App extends Component {
+
+class App extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       posts: [
         {
           id: 'aslkdfjasdlfj',
           title: 'Post 1',
           description: 'This is the first post',
-          body: 'First Post'
+          body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
         },
         {
           id: 'aslkdfjasdlfj',
           title: 'Post 2',
           description: 'This is the second post',
-          body: 'Second Post'
+          body: 'Id ornare arcu odio ut sem nulla pharetra. Placerat orci nulla pellentesque dignissim enim sit. Nisl nunc mi ipsum faucibus vitae aliquet nec. Ut eu sem integer vitae justo eget magna fermentum iaculis. Odio ut sem nulla pharetra diam sit. Commodo quis imperdiet massa tincidunt. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Etiam sit amet nisl purus in mollis. Eget nunc scelerisque viverra mauris in. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Quam elementum pulvinar etiam non.'
         }
       ]
     }
@@ -73,7 +73,6 @@ export default class App extends Component {
   }
 
   render() {
-
     return (
       <BrowserRouter>
         <Navbar />
@@ -86,11 +85,8 @@ export default class App extends Component {
           deleteComment={this.deleteComment}
         />
       </BrowserRouter>
-    )
+    );
   }
 }
 
-
-
-
-
+export default App;

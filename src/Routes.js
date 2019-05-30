@@ -4,16 +4,25 @@ import PostList from './components/PostList'
 import PostForm from './components/PostForm'
 import PostDetail from './components/PostDetail'
 
-
-export default class Routes extends Component {
+class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" render={() => <PostList posts={this.props.posts} />} />
-        <Route exact path="/new" render={rtProps => <PostForm {...rtProps} addPost={this.props.addPost}/>} />
+        <Route
+          exact
+          path="/"
+          render={() => <PostList posts={this.props.posts} />}
+        />
+        <Route
+          exact
+          path="/new"
+          render={rtProps => (
+            <PostForm {...rtProps} addPost={this.props.addPost}/>
+          )}
+        />
         <Route exact path="/:id"
           render={rtProps => {
-            const targetPost = this.props.posts.find(post => post.id === rtProps.match.params.id)
+            const targetPost = this.props.posts.find(post => post.id === rtProps.match.params.id);
             return (
               <PostDetail 
                 {...rtProps}
@@ -26,6 +35,8 @@ export default class Routes extends Component {
             );
         }}/>
       </Switch>
-    )
+    );
   }
 }
+
+export default Routes;
