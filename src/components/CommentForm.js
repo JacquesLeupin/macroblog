@@ -17,7 +17,7 @@ class CommentForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     let { id } = this.props;
-    this.props.addComment(this.state.text, id)
+    this.props.addComment(id, this.state)
     this.setState({text: ''})
   }
 

@@ -23,7 +23,8 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     // delete post
     case DELETE_POST:
-      delete postsCopy[action.payload.id]
+      let deleteIdx = postsCopy.findIndex(post => post.id === action.post.id);
+      postsCopy.splice(deleteIdx, 1)
       return { ...state, posts: postsCopy }
 
     // add comment

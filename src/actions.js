@@ -3,29 +3,6 @@ import axios from 'axios'
 
 const BASEURL = 'http://localhost:5000/api/posts'
 
-export function addPost(post) {
-  return {
-    type: ADD_POST, payload: { post }
-  };
-}
-
-export function deletePost(id) {
-  return {
-    type: DELETE_POST, payload: { id }
-  };
-}
-
-export function addComment(text, id) {
-  return {
-    type: ADD_COMMENT, payload: { text, id }
-  };
-}
-
-export function deleteComment(postId, commentId) {
-  return {
-    type: DELETE_COMMENT, payload: { postId, commentId }
-  };
-}
 
 /**************************************************/
 
@@ -78,6 +55,75 @@ export function editPost(id, post) {
 
 function updatedPost(post) {
   return { type: EDIT_POST, post }
+}
+
+/**************************************************/
+
+export function deletePost(id) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.delete(`${BASEURL}/${id}`)
+      dispatch(deletedPost(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function deletedPost (post) {
+  return { type: DELETE_POST, post }
+}
+
+/**************************************************/
+
+export function addPost(post) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.post(`${BASEURL}/`, post)
+      dispatch(addedPost(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function addedPost (post) {
+  return { type: ADD_POST, post }
+}
+
+/**************************************************/
+
+export function addComment(postId, comment) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.post(`${BASEURL}/${postId}/comments`, comment)
+      console.log(res)
+      dispatch(addedComment(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function addedComment (post) {
+  return { type: ADD_POST, post }
+}
+
+/**************************************************/
+
+export function deleteComment(postId, commentId) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.delete(`${BASEURL}/${postId}/comments/${commentId}`)
+      dispatch(deletedComment(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function deletedComment (post) {
+  return { type: ADD_POST, post }
 }
 
 /**************************************************/

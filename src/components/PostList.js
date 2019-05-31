@@ -7,6 +7,10 @@ class PostList extends Component {
     this.props.getPostsFromAPI()
   }
 
+  componentDidUpdate(){
+    this.props.getPostsFromAPI()
+  }
+  
   render() {
     let posts = this.props.posts.map(post => (
       <div key={post.id} className="card mb-3">

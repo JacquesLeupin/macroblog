@@ -17,6 +17,11 @@ class PostDetail extends Component {
     this.props.getPostFromAPI(id)
   }
 
+  componentDidUpdate() {
+    let id = this.props.match.params.id
+    this.props.getPostFromAPI(id)
+  }
+
   toggleEdit() {
     this.setState(st => ({
       isEditing: !st.isEditing

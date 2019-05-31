@@ -9,6 +9,4 @@ function mapStateToProps(state) {
   };
 }
 
-// const mapDispatchToProps = { addPost, editPost };
-
-export default connect(mapStateToProps, { editPost })(PostForm);
+export default connect(mapStateToProps, { editPost, addPost })(PostForm);
