@@ -2,18 +2,31 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 class PostList extends Component {
+
+  componentDidMount(){
+    this.props.getPostsFromAPI()
+  }
+
   render() {
-    let posts = []
-    for (let [id, post] of Object.entries(this.props.posts)) {
-      posts.push(
-        <div key={id} className="card mb-3">
+    let posts = this.props.posts.map(post => (
+      <div key={post.id} className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title"><Link to={`/${id}`}><h3>{post.title}</h3></Link></h5>
+            <h5 className="card-title"><Link to={`/${post.id}`}><h3>{post.title}</h3></Link></h5>
             <p className="card-text">{post.description}</p>
           </div>
         </div>
-      );
-    }
+    ))
+    // let posts = []
+    // for (let [id, post] of Object.entries(this.props.posts)) {
+    //   posts.push(
+    //     <div key={id} className="card mb-3">
+    //       <div className="card-body">
+    //         <h5 className="card-title"><Link to={`/${id}`}><h3>{post.title}</h3></Link></h5>
+    //         <p className="card-text">{post.description}</p>
+    //       </div>
+    //     </div>
+    //   );
+    // }
     return (
       <div className="posts-list" style={listStyles}>
         {posts}

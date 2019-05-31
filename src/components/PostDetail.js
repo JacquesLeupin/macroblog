@@ -12,7 +12,13 @@ class PostDetail extends Component {
     this.deleteClick = this.deleteClick.bind(this)
   }
 
-  toggleEdit() {    
+  componentDidMount() {
+    console.log(this.props)
+    let id = this.props.match.params.id
+    this.props.getPostFromAPI(id)
+  }
+
+  toggleEdit() {
     this.setState(st => ({
       isEditing: !st.isEditing
     }));
@@ -24,26 +30,37 @@ class PostDetail extends Component {
   }
 
   renderDetail() {
-    const { title, description, body, comments } = this.props.post;
+    console.log("WERE IN RENDER DETAIL", this.props)
+    const { id, title, description, body, comments } = this.props.post;
     const postId = this.props.match.params.id;
-    let commentsArr = []
-    for (let [commentId, text] of Object.entries(comments)) {
-      commentsArr.push(
-        <div key={commentId}>
-          <span onClick={() => this.props.deleteComment(postId, commentId)}>
-          <i className="fas fa-times mr-3" style={{color: "red"}}></i>
-          </span>
-          {text}
-        </div>
-      );
-    }
+    let commentsArr = comments.map(comment => (
+      <div key={comment.id}>
+        <span onClick={() => this.props.deleteComment(id, comment.id)}>
+          <i className="fas fa-times mr-3" style={{ color: "red" }}></i>
+        </span>
+        {comment.text}
+      </div>
+    ))
+
+
+    // let commentsArr = []
+    // for (let [commentId, text] of Object.entries(comments)) {
+    //   commentsArr.push(
+    //     <div key={commentId}>
+    //       <span onClick={() => this.props.deleteComment(postId, commentId)}>
+    //       <i className="fas fa-times mr-3" style={{color: "red"}}></i>
+    //       </span>
+    //       {text}
+    //     </div>
+    //   );
+    // }
     const commentList = comments ? (
       <div className="mb-3">
         {commentsArr}
       </div>
     ) : (
-      <div className="mb-3">No comments yet...</div>
-    )
+        <div className="mb-3">No comments yet...</div>
+      )
     return (
       <div style={detailStyles}>
         <div className="card mb-3">
@@ -74,9 +91,15 @@ class PostDetail extends Component {
   }
 
   render() {
-    return this.state.isEditing ? this.renderForm() : this.renderDetail();
-  }  
-}
+
+    if (!this.props.post) {
+      return "LOADING"
+    } else {
+      return this.state.isEditing ? this.renderForm() : this.renderDetail();
+    }
+  }
+}  
+
 
 export default PostDetail;
 

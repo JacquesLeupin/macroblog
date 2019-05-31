@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { editPost, deletePost, addComment, deleteComment } from "../actions";
 import PostDetail from "../components/PostDetail";
+import { getPostFromAPI } from '../actions'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -16,4 +17,4 @@ const mapDispatchToProps = {
   deleteComment
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);
+export default connect(mapStateToProps, { getPostFromAPI })(PostDetail);
