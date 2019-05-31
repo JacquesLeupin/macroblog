@@ -6,7 +6,6 @@ const INITIAL_STATE = {
   post: {}
 }
 
-
 function rootReducer(state = INITIAL_STATE, action) {
   let postsCopy = { ...state.posts }
   switch (action.type) {
@@ -18,8 +17,9 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     // edit post
     case EDIT_POST:
-      postsCopy[action.payload.id] = { ...postsCopy[action.payload.id], ...action.payload.post }
-      return { ...state, posts: postsCopy }
+      let idx = postsCopy.findIndex(post => post.id === action.post.id);
+      postsCopy[idx] = action.post;
+      return { ...state, posts: postsCopy, post: { comments: state.posts[idx].comments, ...postsCopy[idx] } }
 
     // delete post
     case DELETE_POST:
@@ -37,18 +37,21 @@ function rootReducer(state = INITIAL_STATE, action) {
       delete postsCopy[action.payload.postId].comments[action.payload.commentId]
       return { ...state, posts: postsCopy }
 
+    // get posts
     case GET_POSTS:
       return { ...state, posts: action.posts } 
     
+    // get post
     case GET_POST:
-      console.log("ROOT REDUCER", action.post)
       return { ...state, post: action.post } 
 
+    // show error
     case SHOW_ERR:
-      return
+      break
 
+    // show spinner
     case SHOW_SPINNER:
-      return
+      break
 
     // return state as is
     default:

@@ -4,10 +4,11 @@ import PostForm from "../components/PostForm";
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts,
+    post: state.post
   };
 }
 
-const mapDispatchToProps = { addPost, editPost };
+// const mapDispatchToProps = { addPost, editPost };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
+export default connect(mapStateToProps, { editPost })(PostForm);

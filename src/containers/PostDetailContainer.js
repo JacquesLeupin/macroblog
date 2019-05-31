@@ -5,16 +5,15 @@ import { getPostFromAPI } from '../actions'
 
 function mapStateToProps(state, ownProps) {
   return {
-    posts: state.posts,
-    post: state.posts[ownProps.match.params.id]
+    post: state.post
   };
 }
 
-const mapDispatchToProps = {
-  editPost,
-  deletePost,
-  addComment,
-  deleteComment
-};
+// const mapDispatchToProps = {
+//   editPost,
+//   deletePost,
+//   addComment,
+//   deleteComment
+// };
 
-export default connect(mapStateToProps, { getPostFromAPI })(PostDetail);
+export default connect(mapStateToProps, { getPostFromAPI, editPost })(PostDetail);

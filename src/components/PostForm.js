@@ -30,7 +30,7 @@ class PostForm extends Component {
     evt.preventDefault();
     // if editing post
     if (this.props.isEditing) {
-      this.props.editPost(this.state, this.props.postId)
+      this.props.editPost(this.props.postId, this.state)
       this.setState({
         title: '',
         description: '',

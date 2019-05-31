@@ -9,12 +9,6 @@ export function addPost(post) {
   };
 }
 
-export function editPost(post, id) {
-  return {
-    type: EDIT_POST, payload: { post, id }
-  };
-}
-
 export function deletePost(id) {
   return {
     type: DELETE_POST, payload: { id }
@@ -33,8 +27,9 @@ export function deleteComment(postId, commentId) {
   };
 }
 
-export function getPostsFromAPI() {
+/**************************************************/
 
+export function getPostsFromAPI() {
   return async function (dispatch) {
     dispatch(startLoad())
     try {
@@ -50,8 +45,9 @@ function gotPosts(posts) {
   return { type: GET_POSTS, posts }
 }
 
-export function getPostFromAPI(id) {
+/**************************************************/
 
+export function getPostFromAPI(id) {
   return async function (dispatch) {
     dispatch(startLoad())
     try {
@@ -66,6 +62,25 @@ export function getPostFromAPI(id) {
 function gotPost (post) {
   return { type: GET_POST, post }
 }
+
+/**************************************************/
+
+export function editPost(id, post) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.put(`${BASEURL}/${id}`, post)
+      dispatch(updatedPost(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function updatedPost(post) {
+  return { type: EDIT_POST, post }
+}
+
+/**************************************************/
 
 function showErr(msg){
   return { type: SHOW_ERR, msg }
