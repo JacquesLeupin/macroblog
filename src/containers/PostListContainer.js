@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import PostList from "../components/PostList";
-import { getPostsFromAPI } from '../actions'
+import { getPostsFromAPI, votePost } from '../actions'
 
 function mapStateToProps(state) {
   return {
@@ -8,4 +8,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getPostsFromAPI })(PostList);
+export default connect(mapStateToProps, { getPostsFromAPI, votePost })(PostList);

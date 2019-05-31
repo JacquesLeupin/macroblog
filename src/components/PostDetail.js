@@ -10,6 +10,7 @@ class PostDetail extends Component {
     }
     this.toggleEdit = this.toggleEdit.bind(this)
     this.deleteClick = this.deleteClick.bind(this)
+    this.votePost = this.votePost.bind(this)
   }
 
   componentDidMount() {
@@ -33,8 +34,12 @@ class PostDetail extends Component {
     this.props.history.push('/')
   }
 
+  votePost(evt){
+    this.props.votePost(this.props.match.params.id, evt.target.id)
+  }
+
   renderDetail() {
-    const { id, title, description, body, comments } = this.props.post;
+    const { id, title, description, body, comments, votes } = this.props.post;
     const postId = this.props.match.params.id;
     let commentsArr = comments.map(comment => (
       <div key={comment.id}>
@@ -58,8 +63,11 @@ class PostDetail extends Component {
             <h2>{title}</h2>
             <h4>{description}</h4>
             <p>{body}</p>
+            <p>This post has {votes} votes.</p>
             <button className="btn btn-primary btn-sm" onClick={this.toggleEdit}>Edit Post</button>
             <button className="btn btn-danger btn-sm ml-2" onClick={this.deleteClick}>Delete Post</button>
+            <button id="up" className="btn btn-primary btn-sm" onClick={this.votePost}>Upvote Post</button>
+            <button id="down" className="btn btn-danger btn-sm ml-2" onClick={this.votePost}>DownVote Post</button>
           </div>
         </div>
         <CommentForm addComment={this.props.addComment} id={postId} />

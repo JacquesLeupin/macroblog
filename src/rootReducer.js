@@ -1,4 +1,4 @@
-import { ADD_POST, EDIT_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, SHOW_ERR, SHOW_SPINNER, GET_POSTS, GET_POST } from "./actionTypes";
+import { ADD_POST, EDIT_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, SHOW_ERR, SHOW_SPINNER, GET_POSTS, GET_POST, VOTE_POST } from "./actionTypes";
 import uuid from 'uuid/v4'
 
 const INITIAL_STATE = {
@@ -38,13 +38,19 @@ function rootReducer(state = INITIAL_STATE, action) {
       delete postsCopy[action.payload.postId].comments[action.payload.commentId]
       return { ...state, posts: postsCopy }
 
+    // vote on a post
+    case VOTE_POST:
+      let voteIdx = postsCopy.findIndex(post => post.id === action.post.id);
+      postsCopy[voteIdx] = {...postsCopy[voteIdx], votes: action.votes}
+      return { ...state, posts: postsCopy }
+
     // get posts
     case GET_POSTS:
-      return { ...state, posts: action.posts } 
-    
+      return { ...state, posts: action.posts }
+
     // get post
     case GET_POST:
-      return { ...state, post: action.post } 
+      return { ...state, post: action.post }
 
     // show error
     case SHOW_ERR:

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import PostDetail from "../components/PostDetail";
-import { getPostFromAPI, editPost, deletePost, addComment, deleteComment } from '../actions'
+import { getPostFromAPI, editPost, deletePost, addComment, deleteComment, votePost } from '../actions'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -8,4 +8,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { getPostFromAPI, editPost, deletePost, addComment, deleteComment })(PostDetail);
+export default connect(mapStateToProps, { getPostFromAPI, editPost, deletePost, addComment, deleteComment, votePost })(PostDetail);

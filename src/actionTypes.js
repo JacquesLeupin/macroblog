@@ -5,5 +5,6 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
 export const GET_POSTS = "GET_POSTS";
 export const GET_POST = "GET_POST";
+export const VOTE_POST = "VOTE_POST"
 export const SHOW_ERR = "SHOW_ERR";
 export const SHOW_SPINNER = "SHOW_SPINNER";

@@ -1,4 +1,4 @@
-import { ADD_POST, EDIT_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, SHOW_ERR, SHOW_SPINNER } from "./actionTypes";
+import { ADD_POST, EDIT_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, SHOW_ERR, SHOW_SPINNER, VOTE_POST } from "./actionTypes";
 import axios from 'axios'
 
 const BASEURL = 'http://localhost:5000/api/posts'
@@ -97,7 +97,6 @@ export function addComment(postId, comment) {
   return async function (dispatch) {
     try {
       let res = await axios.post(`${BASEURL}/${postId}/comments`, comment)
-      console.log(res)
       dispatch(addedComment(res.data))
     } catch (err) {
       dispatch(showErr(err))
@@ -106,7 +105,7 @@ export function addComment(postId, comment) {
 }
 
 function addedComment (post) {
-  return { type: ADD_POST, post }
+  return { type: ADD_COMMENT, post }
 }
 
 /**************************************************/
@@ -123,7 +122,24 @@ export function deleteComment(postId, commentId) {
 }
 
 function deletedComment (post) {
-  return { type: ADD_POST, post }
+  return { type: DELETE_COMMENT, post }
+}
+
+/**************************************************/
+
+export function votePost(postId, direction) {
+  return async function (dispatch) {
+    try {
+      let res = await axios.post(`${BASEURL}/${postId}/vote/${direction}`)
+      dispatch(votedPost(res.data))
+    } catch (err) {
+      dispatch(showErr(err))
+    }
+  }
+}
+
+function votedPost (votes) {
+  return { type: VOTE_POST, votes }
 }
 
 /**************************************************/
